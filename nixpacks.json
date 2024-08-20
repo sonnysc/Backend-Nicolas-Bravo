@@ -1,0 +1,30 @@
+{
+    "phases": {
+      "setup": {
+        "nixPkgs": [
+          "php81",
+          "composer",
+          "mysql"
+        ],
+        "commands": [
+          "composer install --no-dev --optimize-autoloader",
+          "php artisan key:generate"
+        ]
+      },
+      "build": {
+        "commands": [
+          "npm install",
+          "npm run build"
+        ]
+      },
+      "start": {
+        "commands": [
+          "php artisan migrate --force",
+          "php artisan config:cache",
+          "php artisan route:cache",
+          "php artisan view:cache",
+          "php artisan serve --host=0.0.0.0 --port=${PORT:-8000}"
+        ]
+      }
+    }
+}
